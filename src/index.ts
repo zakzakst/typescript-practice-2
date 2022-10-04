@@ -1,21 +1,96 @@
-type person = {readonly name: string, mail?: string, age?:number, print: () => void}
-const obj1: person = {
-  name: 'taro',
-  age: 39,
-  print: function(): void {
-    console.log(this.name + ':' + this.age)
+class Person {
+  protected name: string = 'no-name'
+  private mail?: string
+  public age?: number
+  constructor(name: string, mail: string = 'no-mail', age: number = -1) {
+    this.name = name
+    this.mail = mail
+    this.age = age
+  }
+  print(): void {
+    console.log(this.name + '(' + this.mail + ',' + this.age + ')')
   }
 }
-const obj2: person = {
-  name: 'hanako',
-  mail: 'hanako@flower',
-  print: function(): void {
-    console.log(this.name + ':' + this.mail)
+// const taro = new Person('taro', 'taro@yamada', 39)
+// taro.print()
+// const sachiko = new Person('sachiko')
+// sachiko.print()
+// console.log(taro.constructor.name)
+// console.log(Person.name)
+enum School {
+  junior = 'junior',
+  juniorHigh = 'juniorHigh',
+  high = 'high',
+  other = 'other'
+}
+class Student extends Person {
+  school?: School
+  private grade_num: number = -1
+  get gradeN(): number {
+    return this.grade_num
+  }
+  set gradeN(n: number) {
+    this.grade_num = n
+    this.grade = String(n)
+  }
+  private gr_str: string = ''
+  get grade(): string {
+    return this.gr_str
+  }
+  private set grade(pr: string) {
+    let gd = pr
+    switch(this.gradeN) {
+      case 1:
+        gd += 'st'
+        break
+      case 2:
+        gd += 'nd'
+        break
+      case 3:
+        gd += 'rd'
+        break
+      default:
+        gd += 'th'
+    }
+    this.gr_str = gd
+  }
+  constructor(name: string, school: School, grade: number) {
+    super(name)
+    this.school = school
+    this.gradeN = grade
+  }
+  print(): void {
+    let gd: string = this.grade ? String(this.grade) : '-'
+    console.log(this.name + '(' + this.school + ' school: ' + gd + ' grade)')
   }
 }
-// obj1.name = 'Taro'
-obj1.print()
-obj2.print()
+const taro = new Person('taro', 'taro@yamada', 39)
+const hanako = new Student('hanako', School.high, 2)
+taro.print()
+hanako.print()
+// hanako.name = '花子'
+// hanako.mail = 'hanako@flower'
+// hanako.age = 28
+
+
+// type person = {readonly name: string, mail?: string, age?:number, print: () => void}
+// const obj1: person = {
+//   name: 'taro',
+//   age: 39,
+//   print: function(): void {
+//     console.log(this.name + ':' + this.age)
+//   }
+// }
+// const obj2: person = {
+//   name: 'hanako',
+//   mail: 'hanako@flower',
+//   print: function(): void {
+//     console.log(this.name + ':' + this.mail)
+//   }
+// }
+// // obj1.name = 'Taro'
+// obj1.print()
+// obj2.print()
 
 
 // type person = {name: {first: string, second: string}, age: number}

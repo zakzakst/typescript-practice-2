@@ -42,4 +42,9 @@ type data = [name:string, age?:number]
 
 // 絶対nullではない値
 type data = name!:string
+
+// インスタンスのクラスを調べる
+インスタンス instanceof クラス
+インスタンス.constructor.name
+クラス.name
 ```
