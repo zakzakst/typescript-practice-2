@@ -1,14 +1,55 @@
-const person = {
+type person = {readonly name: string, mail?: string, age?:number, print: () => void}
+const obj1: person = {
   name: 'taro',
   age: 39,
   print: function(): void {
-    console.log(this.name + '(' + this.age + ')')
+    console.log(this.name + ':' + this.age)
   }
 }
-person.print()
-person.name = 'hanako'
-person.age = 28
-person.print()
+const obj2: person = {
+  name: 'hanako',
+  mail: 'hanako@flower',
+  print: function(): void {
+    console.log(this.name + ':' + this.mail)
+  }
+}
+// obj1.name = 'Taro'
+obj1.print()
+obj2.print()
+
+
+// type person = {name: {first: string, second: string}, age: number}
+// const obj1: person = {name: {first: 'taro', second: 'yamada'}, age: 39}
+// const {name: {first, second}, age} = obj1
+// console.log(first + second + '::' + age)
+
+
+// function Person(n: string, a: number): {name: string, age: number, print: () => void} {
+//   return {
+//     name: n,
+//     age: a,
+//     print: function() {
+//       console.log(this.name + '(' + this.age + ')')
+//     }
+//   }
+// }
+// const taro = Person('taro', 39)
+// const hanako = Person('hanako', 28)
+// taro.print()
+// hanako.print()
+
+
+// const person = {
+//   name: 'taro',
+//   age: 39,
+//   print: function(): void {
+//     console.log(this.name + '(' + this.age + ')')
+//   }
+// }
+// person.print()
+// person.name = 'hanako'
+// person.age = 28
+// person.print()
 
 
 // console.log('Node path = ' + process.argv[0])
