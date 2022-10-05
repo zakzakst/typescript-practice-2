@@ -48,3 +48,6 @@ type data = name!:string
 インスタンス.constructor.name
 クラス.name
 ```
+
+## TypeScript で target を ES5 以下にしているとき, デフォルトでは上記のコードはコンパイルエラーとなる
+https://qiita.com/pione30/items/70e52691386717634358#typescript-の場合
