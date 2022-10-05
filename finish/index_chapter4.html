@@ -9,12 +9,15 @@
 </head>
 
 <body>
-  <h1 class="bg-primary text-white p-2">Web sample</h1>
+  <h1 class="bg-primary text-white p-2">Memo page</h1>
   <div class="container">
-    <h2 class="my-3">Web sample</h2>
+    <p class="h5">type message:</p>
     <div class="alert alert-primary">
-      <p id="msg">wait...</p>
+      <input type="text" class="form-control" id="message">
+      <button class="btn btn-primary mt-2" id="btn">Save</button>
     </div>
+    <table class="table" id="table"></table>
+    <div class="text-center"><button class="btn btn-danger mt-4" id="initialize">Initialize</button></div>
   </div>
 </body>
 
