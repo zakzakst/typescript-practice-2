@@ -1,35 +1,85 @@
-class MyData<T> {
-  data: T[] = []
-  constructor(...data: T[]) {
-    this.data = data
-  }
-  add(val: T) {
-    this.data.push(val)
-  }
-  [Symbol.iterator]() {
-    let pos = 0
-    let items = this.data
-    return {
-      next(): IteratorResult<T> {
-        if (pos < items.length) {
-          return {
-            done: false,
-            value: items[pos++]
-          }
-        } else {
-          return {
-            done: true,
-            value: null
-          }
-        }
-      }
-    }
-  }
-}
-const data = new MyData<string>('one', 'two', 'three')
-for (let item of data) {
-  console.log(item)
-}
+import { Mydata } from './lib'
+const mydata = new Mydata()
+mydata.add('taro', 39)
+mydata.add('hanako', 28)
+mydata.add('sachiko', 17)
+mydata.add('jiro', 6)
+mydata.print()
+
+
+// namespace myapp {
+//   namespace foundation {
+//     export interface printable {
+//       print(): void
+//     }
+//     export interface stringable {
+//       getString(): string
+//     }
+//   }
+//   export type Person = {
+//     name: string
+//     age: number
+//   }
+//   export class MyData implements
+//     foundation.printable,
+//     foundation.stringable {
+//     people: Person[] = []
+//     constructor() {}
+//     add(nm: string, ag: number) {
+//       this.people.push({name: nm, age: ag})
+//     }
+//     print(): void {
+//       console.log('*** mydata ***\n' + this.getString())
+//     }
+//     getString(): string {
+//       let items = ''
+//       for (let item of this.people) {
+//         items += '  "' + item.name + '(' + item.age + ')",\n'
+//       }
+//       return '[\n' + items + ']'
+//     }
+//   }
+// }
+// const mydata = new myapp.MyData()
+// mydata.add('taro', 39)
+// mydata.add('hanako', 28)
+// mydata.add('sachiko', 17)
+// mydata.add('jiro', 6)
+// mydata.print()
+
+
+// class MyData<T> {
+//   data: T[] = []
+//   constructor(...data: T[]) {
+//     this.data = data
+//   }
+//   add(val: T) {
+//     this.data.push(val)
+//   }
+//   [Symbol.iterator]() {
+//     let pos = 0
+//     let items = this.data
+//     return {
+//       next(): IteratorResult<T> {
+//         if (pos < items.length) {
+//           return {
+//             done: false,
+//             value: items[pos++]
+//           }
+//         } else {
+//           return {
+//             done: true,
+//             value: null
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// const data = new MyData<string>('one', 'two', 'three')
+// for (let item of data) {
+//   console.log(item)
+// }
 
 
 // type person_data = {
