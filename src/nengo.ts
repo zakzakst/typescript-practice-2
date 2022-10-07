@@ -1,0 +1,1 @@
+// http://www.kumamotokokufu-h.ed.jp/kumamoto/bungaku/nengoui.html

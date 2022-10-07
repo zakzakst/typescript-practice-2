@@ -1,44 +1,83 @@
-let msg: HTMLParagraphElement
-// const html = `
-//   <h2><a id="title">This is message</a></h2>
-//   <p>これはTypeScriptで表示したコンテンツです。</p>
-// `
-const html = `
-  <h3>This is message</h3>
-  <div id="content">wait...</div>
-`
+import { MONTH_ITEMS, monthItem } from './monthItems'
+import { WEEK_ITEMS, weekItem } from './weekItems'
 
-window.addEventListener('load', () => {
-  msg = document.querySelector('#msg')
-  // msg.textContent = 'This is sample message!'
-  msg.innerHTML = html
-  // const title: HTMLAnchorElement = document.querySelector('#title')
-  // title.href = 'http://google.com'
-  const content: HTMLDivElement = document.querySelector('#content')
-  setDiv(content)
-  addElement(content)
-})
-
-function setDiv(content: HTMLDivElement): void {
-  content.style.position = 'absolute'
-  content.style.width = '300px'
-  content.style.height = '300px'
-  content.style.borderWidth = '3px'
-  content.style.borderStyle = 'solid'
-  content.style.borderColor = 'red'
-  content.style.backgroundColor = 'white'
-  content.textContent = ''
+type yearItem = {
+  num: number,
+  str: string,
+  strShort: string,
 }
 
-function addElement(content: HTMLDivElement): void {
-  for (let i = 1; i <= 7; i++) {
-    let div: HTMLDivElement = document.createElement('div')
-    div.style.position = 'absolute'
-    div.style.width = '100px'
-    div.style.height = '100px'
-    div.style.top = i * 25 + 'px'
-    div.style.left = i * 25 + 'px'
-    div.style.backgroundColor = '#aa00cc33'
-    content.appendChild(div)
+type dayItem = {
+  num: number,
+  str: string,
+}
+
+class DateFormat {
+  date: Date;
+  year: yearItem;
+  month: monthItem;
+  day: dayItem;
+  week: weekItem;
+
+  constructor(date: Date) {
+    this.date = date;
+    this.setYear();
+    this.setMonth();
+    this.setDate();
+    this.setWeek();
+  }
+
+  /**
+   * 年に関する値を設定
+   */
+  setYear(): void {
+    const targetYear = this.date.getFullYear();
+    const yearStr = ('0000' + targetYear).slice(-4);
+    const yearStrShort = yearStr.slice(-2);
+    this.year = {
+      num: targetYear,
+      str: yearStr,
+      strShort: yearStrShort,
+    }
+  }
+
+  /**
+   * 月に関する値を設定
+   */
+  setMonth(): void {
+    const targetMonth= this.date.getMonth() + 1;
+    this.month = MONTH_ITEMS.find((item) => {
+      return item.num == targetMonth;
+    });
+  }
+
+  /**
+   * 日に関する値を設定
+   */
+  setDate(): void {
+    const targetDay = this.date.getDate();
+    const dayStr = ('00' + targetDay).slice(-2);
+    this.day = {
+      num: targetDay,
+      str: dayStr,
+    };
+  }
+
+  /**
+   * 曜日に関する値を設定
+   */
+  setWeek(): void {
+    const targetWeek= this.date.getDay();
+    this.week = WEEK_ITEMS.find((item) => {
+      return item.id == targetWeek;
+    });
+  }
+
+  print(): void {
+    console.log(this.day);
   }
 }
+
+const today = new Date();
+const todayFormat = new DateFormat(today);
+todayFormat.print();
