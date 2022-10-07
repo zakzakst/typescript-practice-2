@@ -1,5 +1,6 @@
 import { MONTH_ITEMS, monthItem } from './monthItems'
 import { WEEK_ITEMS, weekItem } from './weekItems'
+import { NengoUtil } from './nengo'
 
 type yearItem = {
   num: number,
@@ -74,7 +75,8 @@ class DateFormat {
   }
 
   print(): void {
-    console.log(this.day);
+    NengoUtil.getNengo(this.year.num);
+    // console.log(this.day);
   }
 }
 
