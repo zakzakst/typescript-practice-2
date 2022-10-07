@@ -75,8 +75,8 @@ class DateFormat {
   }
 
   print(): void {
-    NengoUtil.getNengo(this.year.num);
-    // console.log(this.day);
+    const result = NengoUtil.getNengo(this.year.num);
+    console.log(result);
   }
 }
 
