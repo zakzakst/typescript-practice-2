@@ -1,18 +1,41 @@
 import { NENGO_ITEMS, nengoItem } from './nengoItems'
 
 export class NengoUtil {
-  static getNengo(year: number, month: number = 1, day: number = 1): nengoItem {
+  static getNengo(
+    year: number,
+    month: number = 1,
+    day: number = 1
+  ): nengoItem | null {
+    let result = null;
     NENGO_ITEMS.forEach((item) => {
-      if (item.start.year === year) {
-        // 年が同じ場合、月の判定
-        if (item.start.month === month) {
-          // 月が同じ場合、日の判定
-          if (item.start.day) {}
-        }
+      // 年号の開始日
+      const startTime = new Date(
+        item.start.year,
+        item.start.month,
+        item.start.day,
+      ).getTime();
+      // 年号の終了日
+      const endTime = item.end
+        ? new Date(
+            item.end.year,
+            item.end.month,
+            item.end.day,
+          ).getTime()
+        : null;
+      // 対象の日
+      const targetTime = new Date(
+        year,
+        month,
+        day,
+      ).getTime();
+      
+      if (
+        (endTime && (startTime <= targetTime) && (targetTime < endTime)) ||
+        (!endTime && (startTime <= targetTime))
+      ) {
+        result = item;
       }
     });
-    // console.log(year, month, day);
-    // console.log(NENGO_ITEMS);
-    return NENGO_ITEMS[0];
+    return result;
   }
 }

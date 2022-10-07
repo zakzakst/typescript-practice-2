@@ -1,6 +1,7 @@
 import { MONTH_ITEMS, monthItem } from './monthItems'
 import { WEEK_ITEMS, weekItem } from './weekItems'
 import { NengoUtil } from './nengo'
+import { nengoItem } from './nengoItems'
 
 type yearItem = {
   num: number,
@@ -11,6 +12,7 @@ type yearItem = {
 type dayItem = {
   num: number,
   str: string,
+  en: string,
 }
 
 class DateFormat {
@@ -19,6 +21,7 @@ class DateFormat {
   month: monthItem;
   day: dayItem;
   week: weekItem;
+  nengo: nengoItem;
 
   constructor(date: Date) {
     this.date = date;
@@ -26,6 +29,7 @@ class DateFormat {
     this.setMonth();
     this.setDate();
     this.setWeek();
+    this.setNengo();
   }
 
   /**
@@ -58,9 +62,24 @@ class DateFormat {
   setDate(): void {
     const targetDay = this.date.getDate();
     const dayStr = ('00' + targetDay).slice(-2);
+    let dayEn: string;
+    switch (targetDay) {
+      case 1:
+        dayEn = targetDay + 'st';
+        break;
+      case 2:
+        dayEn = targetDay + 'nd';
+        break;
+      case 3:
+        dayEn = targetDay + 'rd';
+        break;
+      default:
+        dayEn = targetDay + 'th';
+    }
     this.day = {
       num: targetDay,
       str: dayStr,
+      en: dayEn,
     };
   }
 
@@ -74,8 +93,40 @@ class DateFormat {
     });
   }
 
+  /**
+   * 年号に関する値を設定
+   */
+  setNengo(): void {
+    this.nengo = NengoUtil.getNengo(
+      this.year.num,
+      this.month.num,
+      this.day.num,
+    );
+  }
+
+  /**
+   * 日付表記（日本語）を取得
+   */
+  getDateTextJp(): string {
+    return `${this.nengo.nengo}${this.year.num - this.nengo.start.year + 1}年${this.month.num}月${this.day.num}日（${this.week.jp}）`;
+  }
+
+  /**
+   * 日付表記（英語）を取得
+   */
+  getDateTextEn(): string {
+    return `${this.day.en} ${this.month.en}, ${this.year.num}`;
+  }
+
+  /**
+   * 日付表記（数字）を取得
+   */
+  getDateTextNum(separator: string = '/'): string {
+    return [this.year.num, this.month.num, this.day.num].join(separator);
+  }
+
   print(): void {
-    const result = NengoUtil.getNengo(this.year.num);
+    const result = this.getDateTextNum('.');
     console.log(result);
   }
 }
